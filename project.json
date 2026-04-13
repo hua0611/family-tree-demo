@@ -1,0 +1,193 @@
+{
+  "project_id": "family-tree-demo",
+  "project_name": "Family Tree Demo",
+  "created_at": "2026-04-13",
+  "current_status": "delivered",
+  "status_history": [
+    { "date": "2026-04-13", "status": "intake" },
+    { "date": "2026-04-13", "status": "planning_complete" },
+    { "date": "2026-04-13", "status": "in_progress" },
+    { "date": "2026-04-13", "status": "delivered" }
+  ],
+  "description": "以 Next.js 16 + TypeScript + Tailwind 建立模擬 Webtrees 外觀與互動的家族族譜 demo 網站，採用假資料，不涉及真實登入與部署。",
+  "source_requirements": "D:/family_tree/forge-internal-master/feature.md",
+  "reference_site": "https://wt-malkins.alineofmalkins.com/tree/wtmalkins",
+  "spec_path": "spec/current.md",
+  "tech_stack": {
+    "framework": "Next.js 16 (App Router)",
+    "language": "TypeScript (strict)",
+    "styling": "Tailwind CSS",
+    "visualization": "d3-hierarchy + d3-shape + d3-zoom (手刻 SVG React 節點) + react-zoom-pan-pinch",
+    "data_source": "static TypeScript fixtures (/data/family.ts)",
+    "i18n": "zh-Hant (primary)",
+    "state": "React Context (role switcher)"
+  },
+  "scope": {
+    "in_scope": [
+      "互動式家族樹（祖先圖、後代圖、扇形圖、沙漏圖）",
+      "人物個人頁（基本資料、照片、事件時間軸、家庭關係）",
+      "媒體庫（相簿網格）",
+      "Stories（家族故事圖文列表與文章頁）",
+      "Webtrees 風格深綠主題 + RWD",
+      "角色切換模擬（管理員 / 編輯者 / 訪客）",
+      "約 20 人、4+ 代的假資料"
+    ],
+    "out_of_scope": [
+      "真實登入 / 認證",
+      "真實檔案上傳",
+      "後端 API 與資料庫",
+      "部署上線、DNS、SSL（feature.md 第 7 項）",
+      "繁中以外的多語系完整實作（預留結構即可）"
+    ]
+  },
+  "pending_decisions": [],
+  "resolved_decisions": [
+    {
+      "id": "DEC-001",
+      "topic": "家族樹視覺化函式庫選型",
+      "status": "resolved",
+      "resolved_at": "2026-04-13",
+      "resolved_by": "architect",
+      "decision": "d3-hierarchy + d3-shape + d3-zoom (手刻 SVG React 節點) + react-zoom-pan-pinch",
+      "adr": "docs/adr/ADR-001-tree-visualization.md",
+      "blocking_tasks": ["TASK-003", "TASK-004"]
+    }
+  ],
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Next.js 16 專案腳手架與 Tailwind 設定",
+      "agent": "frontend-dev",
+      "priority": "P0",
+      "status": "pending",
+      "dependencies": [],
+      "estimated_files": [
+        "package.json",
+        "tsconfig.json",
+        "next.config.ts",
+        "tailwind.config.ts",
+        "postcss.config.mjs",
+        "app/layout.tsx",
+        "app/page.tsx",
+        "app/globals.css"
+      ]
+    },
+    {
+      "id": "TASK-002",
+      "title": "假資料與 TypeScript 型別定義（約 20 人 / 4+ 代）",
+      "agent": "frontend-dev",
+      "priority": "P0",
+      "status": "pending",
+      "dependencies": ["TASK-001"],
+      "estimated_files": [
+        "types/family.ts",
+        "data/family.ts",
+        "data/media.ts",
+        "data/stories.ts",
+        "lib/family-helpers.ts"
+      ]
+    },
+    {
+      "id": "TASK-003",
+      "title": "家族樹視覺化核心元件（祖先圖 + 後代圖）",
+      "agent": "frontend-dev",
+      "priority": "P0",
+      "status": "pending",
+      "dependencies": ["TASK-002", "DEC-001"],
+      "estimated_files": [
+        "components/tree/PedigreeChart.tsx",
+        "components/tree/DescendantChart.tsx",
+        "components/tree/PersonNode.tsx",
+        "app/tree/[id]/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-004",
+      "title": "扇形圖與沙漏圖（Fan Chart / Hourglass）",
+      "agent": "frontend-dev",
+      "priority": "P2",
+      "status": "pending",
+      "dependencies": ["TASK-003"],
+      "estimated_files": [
+        "components/tree/FanChart.tsx",
+        "components/tree/HourglassChart.tsx",
+        "app/tree/[id]/fan/page.tsx",
+        "app/tree/[id]/hourglass/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-005",
+      "title": "人物個人頁（基本資料 + 時間軸 + 關係）",
+      "agent": "frontend-dev",
+      "priority": "P0",
+      "status": "pending",
+      "dependencies": ["TASK-002"],
+      "estimated_files": [
+        "app/person/[id]/page.tsx",
+        "components/person/PersonHeader.tsx",
+        "components/person/EventTimeline.tsx",
+        "components/person/RelationPanel.tsx"
+      ]
+    },
+    {
+      "id": "TASK-006",
+      "title": "媒體庫相簿頁",
+      "agent": "frontend-dev",
+      "priority": "P1",
+      "status": "pending",
+      "dependencies": ["TASK-002"],
+      "estimated_files": [
+        "app/media/page.tsx",
+        "app/media/[id]/page.tsx",
+        "components/media/MediaGrid.tsx",
+        "components/media/MediaLightbox.tsx"
+      ]
+    },
+    {
+      "id": "TASK-007",
+      "title": "Stories 列表與文章頁",
+      "agent": "frontend-dev",
+      "priority": "P1",
+      "status": "pending",
+      "dependencies": ["TASK-002"],
+      "estimated_files": [
+        "app/stories/page.tsx",
+        "app/stories/[id]/page.tsx",
+        "components/stories/StoryCard.tsx"
+      ]
+    },
+    {
+      "id": "TASK-008",
+      "title": "全站導覽列 + 首頁 + 角色切換模擬 + RWD",
+      "agent": "frontend-dev",
+      "priority": "P0",
+      "status": "pending",
+      "dependencies": ["TASK-001", "TASK-002"],
+      "estimated_files": [
+        "components/layout/SiteHeader.tsx",
+        "components/layout/SiteFooter.tsx",
+        "components/layout/RoleSwitcher.tsx",
+        "context/RoleContext.tsx",
+        "app/page.tsx"
+      ]
+    },
+    {
+      "id": "TASK-009",
+      "title": "Webtrees 風格深綠主題 CSS",
+      "agent": "frontend-dev",
+      "priority": "P1",
+      "status": "pending",
+      "dependencies": ["TASK-001"],
+      "estimated_files": [
+        "app/globals.css",
+        "styles/webtrees-theme.css",
+        "tailwind.config.ts"
+      ]
+    }
+  ],
+  "qa_policy": {
+    "required_after_each_task": true,
+    "max_retries_per_task": 3
+  },
+  "preference_overrides": {}
+}

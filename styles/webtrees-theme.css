@@ -1,0 +1,54 @@
+/*
+ * styles/webtrees-theme.css
+ * Webtrees 族譜專用元件樣式參考定義。
+ *
+ * 使用方式：
+ *   此檔的 @layer components 內容已整合進 app/globals.css（Next.js 統一入口）。
+ *   若需獨立引入，請在 layout.tsx 加入：
+ *     import '../styles/webtrees-theme.css'
+ *   並確認 postcss-import 已安裝，或改用 Tailwind 的 @source / @import 指令。
+ *
+ * 色盤對照表（tailwind.config.ts webtrees.*）：
+ *   primary         #2d5a3d   深綠，導覽列 / 主按鈕
+ *   primary-dark    #1e3d28   深綠 hover 狀態
+ *   primary-light   #4a7a5a   深綠淺階
+ *   surface         #f5f1e8   米白頁面背景
+ *   surface-alt     #ebe5d4   斑馬紋偶數列
+ *   card            #ffffff   卡片背景
+ *   card-border     #d4c9b0   卡片邊框
+ *   accent          #8b6f47   褐色連結 / 強調
+ *   accent-light    #b89968   金黃 active 狀態
+ *   ink             #1f2937   主文字
+ *   muted           #6b7280   次要文字
+ *   faint           #9ca3af   三級文字
+ *   divider         #e5e0ce   分隔線
+ *   success         #16a34a   在世徽章
+ *   danger          #dc2626   警示
+ *   male            #4a90e2   節點男性左框
+ *   female          #e07bb0   節點女性左框
+ *   neutral         #9ca3af   節點性別未知框
+ *
+ * 主要 utility class：
+ *   .wt-card                   白底卡片
+ *   .wt-button-primary         主按鈕（深綠）
+ *   .wt-button-secondary       次按鈕（深綠框線）
+ *   .wt-divider                分隔線
+ *   .wt-section-title          區塊標題（含底線）
+ *   .wt-person-node            族譜節點卡片
+ *   .wt-person-node--male      男性節點（藍左框）
+ *   .wt-person-node--female    女性節點（粉左框）
+ *   .wt-person-node--neutral   性別未知節點（灰左框）
+ *   .wt-person-node__name      節點姓名
+ *   .wt-person-node__dates     節點日期
+ *   .wt-timeline-item          時間軸條目
+ *   .wt-timeline-item__label   時間軸事件標籤
+ *   .wt-timeline-item__content 時間軸內文
+ *   .wt-timeline-item__date    時間軸日期
+ *   .wt-header                 深綠 Header
+ *   .wt-header__nav-link       Header 導覽連結
+ *   .wt-header__nav-link--active  活躍選單（accent 底線）
+ *   .wt-table                  表格（含深綠表頭 + 斑馬紋）
+ *   .wt-badge                  徽章基底
+ *   .wt-badge--alive           在世徽章（綠）
+ *   .wt-badge--deceased        歿世徽章（灰）
+ */

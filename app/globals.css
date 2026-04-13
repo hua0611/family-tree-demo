@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #2d5a3d;
+  --color-surface: #f5f1e8;
+  --color-accent: #8b6f47;
+  --color-ink: #1f2937;
+  --color-muted: #6b7280;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-noto-sans-tc), system-ui, sans-serif;
+    color: var(--color-ink);
+  }
+
+  body {
+    background-color: var(--color-surface);
+    @apply bg-webtrees-surface text-webtrees-ink;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(45, 90, 61, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(139, 111, 71, 0.03) 0%, transparent 40%);
+  }
+
+  h1, h2, h3 {
+    @apply font-display text-webtrees-primary-dark;
+  }
+
+  a {
+    color: var(--color-accent);
+    @apply text-webtrees-accent hover:text-webtrees-primary transition-colors;
+  }
+
+  a:hover {
+    color: var(--color-primary);
+  }
+}
+
+@layer components {
+  .wt-card {
+    @apply bg-webtrees-card border border-webtrees-card-border rounded-sm shadow-sm;
+  }
+
+  .wt-button-primary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-webtrees-primary text-white hover:bg-webtrees-primary-dark transition-colors rounded-sm font-medium;
+  }
+
+  .wt-button-secondary {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-transparent text-webtrees-primary border border-webtrees-primary hover:bg-webtrees-primary hover:text-white transition-colors rounded-sm font-medium;
+  }
+
+  .wt-divider {
+    @apply border-t border-webtrees-divider my-6;
+  }
+
+  .wt-section-title {
+    @apply font-display text-2xl text-webtrees-primary-dark border-b border-webtrees-divider pb-2 mb-6;
+  }
+}
+
+/* ── 族譜專用元件（同步於 styles/webtrees-theme.css） ── */
+@layer components {
+  /* 家族樹節點卡片 */
+  .wt-person-node {
+    @apply bg-webtrees-card border border-webtrees-card-border rounded-sm shadow-sm
+           px-3 py-2 min-w-[140px] cursor-pointer
+           transition-shadow hover:shadow-md;
+  }
+
+  .wt-person-node--male {
+    @apply border-l-4 border-l-webtrees-male;
+  }
+
+  .wt-person-node--female {
+    @apply border-l-4 border-l-webtrees-female;
+  }
+
+  .wt-person-node--neutral {
+    @apply border-l-4 border-l-webtrees-neutral;
+  }
+
+  .wt-person-node__name {
+    @apply font-display font-semibold text-sm text-webtrees-ink leading-snug;
+  }
+
+  .wt-person-node__dates {
+    @apply text-xs text-webtrees-muted mt-0.5;
+  }
+
+  /* 時間軸 */
+  .wt-timeline-item {
+    @apply relative pl-6 pb-6 last:pb-0;
+  }
+
+  .wt-timeline-item__label {
+    @apply text-xs font-medium uppercase tracking-wide text-webtrees-muted mb-0.5;
+  }
+
+  .wt-timeline-item__content {
+    @apply text-sm text-webtrees-ink;
+  }
+
+  .wt-timeline-item__date {
+    @apply text-xs text-webtrees-faint;
+  }
+
+  /* Header 深綠底色 */
+  .wt-header {
+    @apply bg-webtrees-primary text-white;
+  }
+
+  .wt-header__nav-link {
+    @apply px-3 py-1.5 text-sm text-white/80 hover:text-white
+           transition-colors rounded-sm hover:bg-webtrees-primary-dark;
+  }
+
+  .wt-header__nav-link--active {
+    @apply text-webtrees-accent-light font-medium
+           border-b-2 border-webtrees-accent-light;
+  }
+
+  /* 表格斑馬紋 */
+  .wt-table {
+    @apply w-full text-sm border-collapse;
+  }
+
+  .wt-table thead th {
+    @apply px-4 py-2 text-left font-semibold bg-webtrees-primary text-white;
+  }
+
+  .wt-table tbody td {
+    @apply px-4 py-2 border-t border-webtrees-divider;
+  }
+
+  /* 徽章 */
+  .wt-badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-sm text-xs font-medium;
+  }
+
+  .wt-badge--alive {
+    @apply bg-webtrees-success/10 text-webtrees-success;
+  }
+
+  .wt-badge--deceased {
+    @apply bg-webtrees-muted/10 text-webtrees-muted;
+  }
+}
+
+/* 時間軸連接線（偽元素，不能用 @apply） */
+.wt-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0.75rem;
+  bottom: 0;
+  width: 1px;
+  background-color: #e5e0ce;
+}
+
+.wt-timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.625rem;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 9999px;
+  background-color: #2d5a3d;
+  border: 2px solid #ffffff;
+}
+
+.wt-timeline-item:last-child::before {
+  display: none;
+}
+
+/* 表格斑馬紋（nth-child 不能用 @apply） */
+.wt-table tbody tr:nth-child(even) {
+  background-color: #ebe5d4;
+}
+
+.wt-table tbody tr:hover {
+  background-color: #f5f1e8;
+}
+
+/* 自訂 scrollbar（桌機） */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f5f1e8;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #8b6f47;
+    border-radius: 5px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6b5236;
+  }
+}
