@@ -24,6 +24,7 @@ WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN mkdir -p public
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -46,7 +47,7 @@ RUN addgroup --system --gid 1001 nodejs \
  && adduser  --system --uid 1001 nextjs
 
 # Copy only what the standalone server needs
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 # Set correct ownership before copying the build output
 RUN mkdir -p .next

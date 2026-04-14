@@ -131,3 +131,9 @@ npm run dev
 這表示 Zeabur 使用了平台自動生成的 Dockerfile，而不是 repo 裡的版本。
 請確認 service 的 Root Directory 是留空（或 `/`），而不是被誤填成子資料夾路徑。
 設定正確後重新觸發 deploy，Zeabur 就會找到並使用本 repo 的 `Dockerfile`。
+
+**部署失敗，log 出現 `"/app/public": not found` 或 `failed to calculate checksum`**
+
+Next.js 官方 Dockerfile 範本預設 `public/` 資料夾存在，但若本專案所有圖片都走 remote URL、沒有本地 public 資產，這個資料夾可能沒被建立或無法被 git 追蹤（空資料夾 / 只含 `.gitkeep` 的資料夾在某些 BuildKit 環境下會被忽略）。
+
+本專案的 Dockerfile 已在 builder stage 加入 `RUN mkdir -p public` 作為 safety net，確保 `/app/public` 一定存在。如果你 fork 本專案後修改 Dockerfile 不慎刪除了這行，可能再次踩到這個雷。
