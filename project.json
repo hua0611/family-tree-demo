@@ -7,7 +7,8 @@
     { "date": "2026-04-13", "status": "intake" },
     { "date": "2026-04-13", "status": "planning_complete" },
     { "date": "2026-04-13", "status": "in_progress" },
-    { "date": "2026-04-13", "status": "delivered" }
+    { "date": "2026-04-13", "status": "delivered" },
+    { "date": "2026-04-14", "status": "scope_extended" }
   ],
   "description": "以 Next.js 16 + TypeScript + Tailwind 建立模擬 Webtrees 外觀與互動的家族族譜 demo 網站，採用假資料，不涉及真實登入與部署。",
   "source_requirements": "D:/family_tree/forge-internal-master/feature.md",
@@ -30,13 +31,14 @@
       "Stories（家族故事圖文列表與文章頁）",
       "Webtrees 風格深綠主題 + RWD",
       "角色切換模擬（管理員 / 編輯者 / 訪客）",
-      "約 20 人、4+ 代的假資料"
+      "約 20 人、4+ 代的假資料",
+      "Zeabur 部署配置（Dockerfile）"
     ],
     "out_of_scope": [
       "真實登入 / 認證",
       "真實檔案上傳",
       "後端 API 與資料庫",
-      "部署上線、DNS、SSL（feature.md 第 7 項）",
+      "DNS、SSL、生產環境監控",
       "繁中以外的多語系完整實作（預留結構即可）"
     ]
   },
@@ -182,6 +184,19 @@
         "app/globals.css",
         "styles/webtrees-theme.css",
         "tailwind.config.ts"
+      ]
+    },
+    {
+      "id": "TASK-010",
+      "title": "Zeabur 部署配置（Dockerfile + .dockerignore + next.config standalone）",
+      "agent": "devops",
+      "priority": "P1",
+      "status": "completed",
+      "dependencies": ["TASK-001"],
+      "estimated_files": [
+        "Dockerfile",
+        ".dockerignore",
+        "next.config.ts"
       ]
     }
   ],

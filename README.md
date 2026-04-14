@@ -102,3 +102,32 @@ npm run dev
 開啟 `http://localhost:3000`。
 
 > ⚠️ Forge Loop 不執行 `npm install`；首次執行前請手動安裝依賴。
+
+## Zeabur 部署
+
+### 前置條件
+
+- 專案已 push 到 GitHub（remote：`https://github.com/hua0611/family-tree-demo.git`）。
+- 你有 Zeabur 帳號並已登入 [Zeabur Dashboard](https://dash.zeabur.com)。
+
+### 部署步驟
+
+1. 在 Zeabur Dashboard 點「New Project」→「Deploy Service」→「Git」。
+2. 選擇 `hua0611/family-tree-demo` repo 與 `main` 分支。
+3. **Root Directory 留空**（或填 `/`）—— 本 repo 根目錄就是 Next.js 專案根目錄，`Dockerfile` 直接在 repo 根目錄。**不要**填 `projects/family-tree-demo`。
+4. Zeabur 偵測到根目錄的 `Dockerfile` 後會自動使用它，不會觸發平台自動生成的 Dockerfile。
+5. 等待 build 完成（約 2–4 分鐘）。服務預設監聽 PORT 3000，Zeabur 會自動路由。
+
+### 綁定域名
+
+在 service 頁面切換到「Networking」分頁：
+- **Generated domain**：點「Generate Domain」即可取得 `*.zeabur.app` 子域名。
+- **Custom domain**：填入自訂域名，依指示在 DNS 服務商新增 CNAME 記錄。
+
+### 常見問題
+
+**部署失敗，log 出現 `npm update -g npm` 或 `Cannot find module 'promise-retry'`**
+
+這表示 Zeabur 使用了平台自動生成的 Dockerfile，而不是 repo 裡的版本。
+請確認 service 的 Root Directory 是留空（或 `/`），而不是被誤填成子資料夾路徑。
+設定正確後重新觸發 deploy，Zeabur 就會找到並使用本 repo 的 `Dockerfile`。
